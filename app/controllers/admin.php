@@ -266,4 +266,131 @@ class Admin extends Controller{
 		$this->view('admin/mapel/index', $data);
 		$this->view('templates/admin/footer');
 	}
+
+	// ===============================================================================================
+
+	public function kelas(){
+		$data['bagian'] = 'Kelas';
+
+		$data['kelas'] = $this->model('adminModel')->getAllKelas();
+
+		$this->view('templates/admin/header', $data);
+		$this->view('admin/kelas/index', $data);
+		$this->view('templates/admin/footer');
+	}
+
+	public function tambahKelas(){
+
+		if ($this->model('adminModel')->tambahKelas($_POST) > 0) {
+			Flasher::setFlash('Berhasil menambahkan data kelas.', 'primary');
+			header('Location: ' . BASEURL . '/admin/kelas/index');
+			exit;
+		} else{
+			Flasher::setFlash('Gagal menambahkan data kelas!', 'warning');
+		}
+	}
+
+	public function editKelas($id){
+		$data['bagian'] = 'Edit kelas';
+
+		$data['kelas'] = $this->model('adminModel')->getKelasById($id);
+
+		$this->view('templates/admin/header', $data);
+		$this->view('admin/kelas/editKelas', $data);
+		$this->view('templates/admin/footer');
+	}
+
+	public function prosesEditKelas(){
+		if ($this->model('adminModel')->editKelas($_POST) > 0) {
+			Flasher::setFlash('Berhasil update data kelas.', 'primary');
+			header('Location: ' . BASEURL . '/admin/kelas/index');
+			exit;
+		} else{
+			Flasher::setFlash('Gagal update data kelas!', 'warning');
+		}
+	}
+
+	public function hapusKelas($id){
+		if ($this->model('adminModel')->hapusKelas($id) > 0) {
+			Flasher::setFlash('Berhasil menghapus data kelas.', 'primary');
+			header('Location: ' . BASEURL . '/admin/kelas/index');
+			exit;
+		} else{
+			Flasher::setFlash('Gagal menghapus data kelas!', 'warning');
+		}
+	}
+
+	public function cariKelas(){
+		$data['bagian'] = 'Kelas';
+
+		$data['kelas'] = $this->model('adminModel')->cariKelas();
+
+		$this->view('templates/admin/header', $data);
+		$this->view('admin/kelas/index', $data);
+		$this->view('templates/admin/footer');
+	}
+
+	// ===============================================================================================
+
+	public function sub(){
+		$data['bagian'] = 'Sub Bab';
+
+		$data['sub'] = $this->model('adminModel')->getAllSub();
+		$data['bab'] = $this->model('adminModel')->getAllBab();
+
+		$this->view('templates/admin/header', $data);
+		$this->view('admin/sub/index', $data);
+		$this->view('templates/admin/footer');
+	}
+
+	public function tambahSub(){
+
+		if ($this->model('adminModel')->tambahSub($_POST) > 0) {
+			Flasher::setFlash('Berhasil menambahkan data sub.', 'primary');
+			header('Location: ' . BASEURL . '/admin/sub/index');
+			exit;
+		} else{
+			Flasher::setFlash('Gagal menambahkan data sub!', 'warning');
+		}
+	}
+
+	public function editSub($id){
+		$data['bagian'] = 'Edit sub';
+		$data['bab'] = $this->model('adminModel')->getAllBab();
+
+		$data['sub'] = $this->model('adminModel')->getSubById($id);
+
+		$this->view('templates/admin/header', $data);
+		$this->view('admin/sub/editSub', $data);
+		$this->view('templates/admin/footer');
+	}
+
+	public function prosesEditSub(){
+		if ($this->model('adminModel')->editSub($_POST) > 0) {
+			Flasher::setFlash('Berhasil update data sub.', 'primary');
+			header('Location: ' . BASEURL . '/admin/sub/index');
+			exit;
+		} else{
+			Flasher::setFlash('Gagal update data sub!', 'warning');
+		}
+	}
+
+	public function hapusSub($id){
+		if ($this->model('adminModel')->hapusSub($id) > 0) {
+			Flasher::setFlash('Berhasil menghapus data sub.', 'primary');
+			header('Location: ' . BASEURL . '/admin/sub/index');
+			exit;
+		} else{
+			Flasher::setFlash('Gagal menghapus data sub!', 'warning');
+		}
+	}
+
+	public function cariSub(){
+		$data['bagian'] = 'Sub Bab';
+
+		$data['sub'] = $this->model('adminModel')->cariSub();
+		$this->view('templates/admin/header', $data);
+		$this->view('admin/sub/index', $data);
+		$this->view('templates/admin/footer');
+	}
 }

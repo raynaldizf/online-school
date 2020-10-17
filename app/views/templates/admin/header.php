@@ -32,11 +32,17 @@
                     <a href="<?php echo BASEURL ?>/admin/guru"> <i class="fas fa-user"></i> Guru  </a>
                 </li>               
                 <li> 
+                    <a href="<?php echo BASEURL ?>/admin/kelas"> <i class="fas fa-user"></i> Kelas  </a>
+                </li>              
+                <li> 
                     <a href="<?php echo BASEURL ?>/admin/mapel"> <i class="fas fa-user"></i> Mapel  </a>
                 </li>                
                 <li> 
                     <a href="<?php echo BASEURL ?>/admin/bab"> <i class="fas fa-user"></i> Bab  </a>
-                </li>                  
+                </li>             
+                <li> 
+                    <a href="<?php echo BASEURL ?>/admin/sub"> <i class="fas fa-user"></i> Sub Bab  </a>
+                </li>                      
                 <li> 
                     <a href="admin-scripts.html"> <i class="fas fa-code"></i> Scripts    </a>
                 </li>                 

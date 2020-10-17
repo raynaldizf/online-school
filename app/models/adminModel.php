@@ -4,7 +4,9 @@ class adminModel{
 
 	private $db;
 	private $tableBab = 'bab';
+	private $tableSub = 'sub_bab';
 	private $tableSiswa = 'siswa';
+	private $tableKelas = 'kelas';
 	private $tableMapel = 'mapel';
 	private $tableGuru = 'guru';
 
@@ -300,6 +302,131 @@ class adminModel{
 					nama_mapel LIKE '%$keyword%' 
 					OR jenjang_kelas LIKE '%$keyword%'
 					OR deskripsi_mapel LIKE '%$keyword%'";
+		$this->db->query($query);
+		return $this->db->resultSet();
+		
+		return $this->db->resultSet();
+	}
+
+	// ===============================================================================================
+
+	public function getAllKelas(){
+		$this->db->query('SELECT * FROM ' . $this->tableKelas);
+		return $this->db->resultSet();
+	}
+
+	public function getKelasById($id){
+		$this->db->query('SELECT * FROM ' . $this->tableKelas . ' WHERE id_kelas = ' . $id);
+		return $this->db->single();
+	}
+
+	public function tambahKelas($data){
+		$query = "INSERT INTO kelas(jenjang_kelas, deskripsi_kelas)
+					VALUES
+					(:jenjang_kelas, :deskripsi_kelas)";
+		$this->db->query($query);
+		$this->db->bind('jenjang_kelas', $data['jenjang_kelas']);
+		$this->db->bind('deskripsi_kelas', $data['deskripsi_kelas']);
+
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+	
+
+	public function editKelas($data){
+		$query = "UPDATE kelas
+					SET
+					jenjang_kelas = :jenjang_kelas,  deskripsi_kelas = :deskripsi_kelas WHERE id_kelas = :id_kelas";
+		$this->db->query($query);
+		$this->db->bind('id_kelas', $data['id_kelas']);
+		$this->db->bind('jenjang_kelas', $data['jenjang_kelas']);
+		$this->db->bind('deskripsi_kelas', $data['deskripsi_kelas']);
+
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+
+	public function hapusKelas($id){
+		$query = "DELETE FROM kelas WHERE id_kelas = :id_kelas";
+		$this->db->query($query);
+		$this->db->bind('id_kelas', $id);
+
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+
+	public function cariKelas(){
+		$keyword = $_POST['keyword'];
+		$query = "SELECT * FROM $this->tableKelas WHERE
+					jenjang_kelas LIKE '%$keyword%'
+					OR deskripsi_kelas LIKE '%$keyword%'";
+		$this->db->query($query);
+		return $this->db->resultSet();
+		
+		return $this->db->resultSet();
+	}
+
+	// ===============================================================================================
+
+	public function getAllSub(){
+		$this->db->query('SELECT * FROM ' . $this->tableSub .' INNER JOIN ' . $this->tableBab . ' ON ' . $this->tableSub .'.id_bab = ' . $this->tableBab . '.id_bab');
+		return $this->db->resultSet();
+	}
+
+	public function getSubById($id){
+		$this->db->query('SELECT * FROM ' . $this->tableSub . ' INNER JOIN ' . $this->tableBab . ' ON ' . $this->tableSub .'.id_bab = ' . $this->tableBab . '.id_bab WHERE id_sub = ' . $id);
+		return $this->db->single();
+	}
+
+	public function tambahSub($data){
+		$query = "INSERT INTO sub_bab(id_bab, judul_sub, isi_sub)
+					VALUES
+					(:id_bab, :judul_sub, :isi_sub)";
+		$this->db->query($query);
+		$this->db->bind('id_bab', $data['id_bab']);
+		$this->db->bind('judul_sub', $data['judul_sub']);
+		$this->db->bind('isi_sub', $data['isi_sub']);
+
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+	
+
+	public function editSub($data){
+		$query = "UPDATE sub_bab
+					SET
+					id_bab = :id_bab, judul_sub = :judul_sub, isi_sub = :isi_sub WHERE id_sub = :id_sub";
+		$this->db->query($query);
+		$this->db->bind('id_bab', $data['id_bab']);
+		$this->db->bind('id_sub', $data['id_sub']);
+		$this->db->bind('judul_sub', $data['judul_sub']);
+		$this->db->bind('isi_sub', $data['isi_sub']);
+
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+
+	public function hapusSub($id){
+		$query = "DELETE FROM sub_bab WHERE id_sub = :id_sub";
+		$this->db->query($query);
+		$this->db->bind('id_sub', $id);
+
+		$this->db->execute();
+
+		return $this->db->rowCount();
+	}
+
+	public function cariSub(){
+		$keyword = $_POST['keyword'];
+		$query = "SELECT * FROM $this->tableSub INNER JOIN bab ON sub_bab.id_bab = bab.id_bab WHERE
+					judul_sub LIKE '%$keyword%' 
+					OR nama_bab LIKE '%$keyword%'
+					OR jenjang_kelas LIKE '%$keyword%'";
 		$this->db->query($query);
 		return $this->db->resultSet();
 		
